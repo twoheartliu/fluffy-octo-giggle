@@ -9,6 +9,10 @@ module.exports = defineConfig({
         target: 'http://39.98.123.211',
         // pathRewrite: { '^/api': '' },
       },
+      '/mock': {
+        target: 'http://127.0.0.1:4523/mock/898860/api',
+        pathRewrite: { '^/mock': '' },
+      },
     },
   },
 })
