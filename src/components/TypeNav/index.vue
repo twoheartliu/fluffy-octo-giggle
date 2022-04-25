@@ -14,7 +14,7 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
             v-for="(c1, index) in categoryList"
@@ -23,7 +23,11 @@
             @mouseleave="leaveIndex"
           >
             <h3 @mouseenter="changeIndex(index)">
-              <a href="">{{ c1.categoryName }}</a>
+              <a
+                :data-categoryName="c1.categoryName"
+                :data-category1Id="c1.categoryId"
+                >{{ c1.categoryName }}</a
+              >
             </h3>
             <div class="item-list clearfix" v-show="currentIndex === index">
               <div
@@ -33,11 +37,19 @@
               >
                 <dl class="fore">
                   <dt>
-                    <a href="">{{ c2.categoryName }}</a>
+                    <a
+                      :data-categoryName="c2.categoryName"
+                      :data-category2Id="c2.categoryId"
+                      >{{ c2.categoryName }}</a
+                    >
                   </dt>
                   <dd>
                     <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                      <a href="">{{ c3.categoryName }}</a>
+                      <a
+                        :data-categoryName="c3.categoryName"
+                        :data-category3Id="c3.categoryId"
+                        >{{ c3.categoryName }}</a
+                      >
                     </em>
                   </dd>
                 </dl>
@@ -53,8 +65,8 @@
 <script>
 import { mapState } from 'vuex'
 import throttle from 'lodash/throttle'
+import { removeEmptyElement } from '@/utils'
 
-console.log('throttle', throttle)
 export default {
   name: 'TypeNav',
   // 组件挂载完毕
@@ -75,14 +87,32 @@ export default {
     }),
   },
   methods: {
-    changeIndex (index) {
+    changeIndex: throttle(function (index) {
       // index 鼠标移到某一级分类的索引
-      console.log('currentindex', index)
       this.currentIndex = index
-    },
+    }, 50),
     leaveIndex () {
       // index 鼠标移出
       this.currentIndex = -1
+    },
+    goSearch (e) {
+      // 获取标签名
+      const { categoryname, category1id, category2id, category3id } = e.target.dataset
+
+      const location = { name: 'search' }
+      let query = {
+        categoryname,
+        category1Id: category1id,
+        category2Id: category2id,
+        category3Id: category3id
+      }
+
+      console.log('query', query)
+
+      location.query = removeEmptyElement(query)
+
+      console.log('location', location)
+      this.$router.push(location)
     }
   }
 }
@@ -91,6 +121,12 @@ export default {
 <style lang="less" scoped>
 .type-nav {
   border-bottom: 2px solid #e1251b;
+
+  a {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   .container {
     width: 1200px;

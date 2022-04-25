@@ -9,8 +9,8 @@ import 'nprogress/nprogress.css'
 // request 就是 axios，只不过加了一些自定义配置
 const requests = axios.create({
   // 基础 URL
-  baseURL: '/api',
-  // baseURL: '/mock',
+  // baseURL: '/api',
+  baseURL: '/mock',
   // 超时时间 5s
   timeout: 5000,
 })
