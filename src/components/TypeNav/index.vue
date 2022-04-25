@@ -106,12 +106,7 @@ export default {
         category2Id: category2id,
         category3Id: category3id
       }
-
-      console.log('query', query)
-
       location.query = removeEmptyElement(query)
-
-      console.log('location', location)
       this.$router.push(location)
     }
   }
