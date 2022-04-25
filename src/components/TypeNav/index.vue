@@ -20,8 +20,9 @@
             v-for="(c1, index) in categoryList"
             :key="c1.categoryId"
             :class="currentIndex === index ? 'active' : ''"
+            @mouseleave="leaveIndex"
           >
-            <h3 @mouseenter="changeIndex(index)" @mouseleave="leaveIndex">
+            <h3 @mouseenter="changeIndex(index)">
               <a href="">{{ c1.categoryName }}</a>
             </h3>
             <div class="item-list clearfix" v-show="currentIndex === index">
@@ -51,7 +52,9 @@
 
 <script>
 import { mapState } from 'vuex'
+import throttle from 'lodash/throttle'
 
+console.log('throttle', throttle)
 export default {
   name: 'TypeNav',
   // 组件挂载完毕
