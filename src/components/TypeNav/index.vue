@@ -1,7 +1,11 @@
 <template>
   <div class="type-nav">
     <!-- {{ categoryList }} -->
-    <div class="container">
+    <div
+      class="container"
+      @mouseenter="() => (show = !show)"
+      @mouseleave="leaveIndex"
+    >
       <h2 class="all">全部商品分类</h2>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -13,14 +17,13 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
+      <div class="sort" v-show="show">
         <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
             v-for="(c1, index) in categoryList"
             :key="c1.categoryId"
             :class="currentIndex === index ? 'active' : ''"
-            @mouseleave="leaveIndex"
           >
             <h3 @mouseenter="changeIndex(index)">
               <a
@@ -72,12 +75,17 @@ export default {
   // 组件挂载完毕
   data () {
     return {
-      currentIndex: -1
+      currentIndex: -1,
+      show: true
     }
   },
   mounted () {
     // 通知 vuex 发请求,获取数据,存储于 store 中
     this.$store.dispatch("categoryList")
+    // 当路由不在首页时默认不显示三级菜单
+    if (this.$route.path !== '/') {
+      this.show = false
+    }
   },
   computed: {
     ...mapState({
