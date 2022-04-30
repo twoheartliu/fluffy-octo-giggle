@@ -11,7 +11,11 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default {
-  components: { Header, Footer }
+  components: { Header, Footer },
+  mounted () {
+    // 通知 vuex 发请求,获取数据,存储于 store 中
+    this.$store.dispatch("categoryList")
+  },
 }
 </script>
 

@@ -1,11 +1,7 @@
 <template>
   <div class="type-nav">
     <!-- {{ categoryList }} -->
-    <div
-      class="container"
-      @mouseenter="() => (show = !show)"
-      @mouseleave="leaveIndex"
-    >
+    <div class="container" @mouseenter="handleNavShow" @mouseleave="leaveIndex">
       <h2 class="all">全部商品分类</h2>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -17,50 +13,52 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort" v-show="show">
-        <div class="all-sort-list2" @click="goSearch">
-          <div
-            class="item"
-            v-for="(c1, index) in categoryList"
-            :key="c1.categoryId"
-            :class="currentIndex === index ? 'active' : ''"
-          >
-            <h3 @mouseenter="changeIndex(index)">
-              <a
-                :data-categoryName="c1.categoryName"
-                :data-category1Id="c1.categoryId"
-                >{{ c1.categoryName }}</a
-              >
-            </h3>
-            <div class="item-list clearfix" v-show="currentIndex === index">
-              <div
-                class="subitem"
-                v-for="c2 in c1.categoryChild"
-                :key="c2.categoryId"
-              >
-                <dl class="fore">
-                  <dt>
-                    <a
-                      :data-categoryName="c2.categoryName"
-                      :data-category2Id="c2.categoryId"
-                      >{{ c2.categoryName }}</a
-                    >
-                  </dt>
-                  <dd>
-                    <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+      <transition name="sort">
+        <div class="sort" v-show="show">
+          <div class="all-sort-list2" @click="goSearch">
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.categoryId"
+              :class="currentIndex === index ? 'active' : ''"
+            >
+              <h3 @mouseenter="changeIndex(index)">
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                  >{{ c1.categoryName }}</a
+                >
+              </h3>
+              <div class="item-list clearfix" v-show="currentIndex === index">
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
+                >
+                  <dl class="fore">
+                    <dt>
                       <a
-                        :data-categoryName="c3.categoryName"
-                        :data-category3Id="c3.categoryId"
-                        >{{ c3.categoryName }}</a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                        >{{ c2.categoryName }}</a
                       >
-                    </em>
-                  </dd>
-                </dl>
+                    </dt>
+                    <dd>
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                          >{{ c3.categoryName }}</a
+                        >
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -79,20 +77,18 @@ export default {
       show: true
     }
   },
-  mounted () {
-    // 通知 vuex 发请求,获取数据,存储于 store 中
-    this.$store.dispatch("categoryList")
-    // 当路由不在首页时默认不显示三级菜单
-    if (this.$route.path !== '/') {
-      this.show = false
-    }
-  },
   computed: {
     ...mapState({
       // 右侧需要的是一个函数，当使用计算属性的时候，右侧函数会立即执行一次
       // 注入一个参数 state， 即大 store 中的 state
       categoryList: state => state.home.categoryList
     }),
+  },
+  mounted () {
+    // 当路由不在首页时默认不显示三级菜单
+    if (this.$route.path !== '/') {
+      this.show = false
+    }
   },
   methods: {
     changeIndex: throttle(function (index) {
@@ -102,6 +98,12 @@ export default {
     leaveIndex () {
       // index 鼠标移出
       this.currentIndex = -1
+      if (this.$route.path !== '/') {
+        this.show = !this.show
+      }
+    },
+    handleNavShow () {
+      this.show = true
     },
     goSearch (e) {
       // 获取标签名
@@ -115,6 +117,11 @@ export default {
         category3Id: category3id
       }
       location.query = removeEmptyElement(query)
+
+      // 判断 $route params 是否存在，如果存在，则带上它
+      if (this.$route.params) {
+        location.params = this.$route.params
+      }
       this.$router.push(location)
     }
   }
@@ -241,6 +248,32 @@ export default {
           }
         }
       }
+    }
+
+    // 过渡动画的样式
+    // 过渡动画开始状态(进入)
+    .sort-enter {
+      height: 0;
+    }
+    // 过渡动画结束状态（进入）
+    .sort-enter-to {
+      height: 461px;
+    }
+    // 定义动画速率、时间
+    .sort-enter-active {
+      transition: all 0.2s linear;
+    }
+
+    .sort-leave {
+      height: 461px;
+    }
+
+    .sort-leave-to {
+      height: 0px;
+    }
+
+    .sort-leave-active {
+      transition: all 0.2s linear;
     }
   }
 }

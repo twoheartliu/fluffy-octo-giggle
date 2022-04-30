@@ -31,12 +31,13 @@
         </router-link>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
+        <form class="searchForm">
           <input
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
             v-model="keyword"
+            @keyup.enter="goSearch"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
@@ -63,12 +64,19 @@ export default {
       // 路由传参 
       // 1. params 2.query 参数
       // 方式 1. 字符串拼接 2. 模版字符串 3. obj
-      // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
-      this.$router.replace({
+      const location = {
         name: 'search',
-        params: { keyword: this.keyword || undefined },
-        query: { k: this.keyword.toUpperCase() },
-      })
+        params: {
+          keyword: this.keyword || undefined
+        }
+      }
+
+      // 判断是否有 query 参数，如果有则带进去
+      if (this.$route.query) {
+        location.query = this.$route.query
+      }
+
+      this.$router.push(location)
     }
   }
 }

@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  props: ["keyword"],
 }
 </script>
 
