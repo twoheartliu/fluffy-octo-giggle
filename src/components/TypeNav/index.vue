@@ -78,11 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      // 右侧需要的是一个函数，当使用计算属性的时候，右侧函数会立即执行一次
-      // 注入一个参数 state， 即大 store 中的 state
-      categoryList: state => state.home.categoryList
-    }),
+    ...mapState('home', ['categoryList']),
   },
   mounted () {
     // 当路由不在首页时默认不显示三级菜单
@@ -111,7 +107,7 @@ export default {
 
       const location = { name: 'search' }
       let query = {
-        categoryname,
+        categoryName: categoryname,
         category1Id: category1id,
         category2Id: category2id,
         category3Id: category3id
@@ -261,18 +257,6 @@ export default {
     }
     // 定义动画速率、时间
     .sort-enter-active {
-      transition: all 0.2s linear;
-    }
-
-    .sort-leave {
-      height: 461px;
-    }
-
-    .sort-leave-to {
-      height: 0px;
-    }
-
-    .sort-leave-active {
       transition: all 0.2s linear;
     }
   }

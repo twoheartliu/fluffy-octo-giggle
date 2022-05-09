@@ -31,7 +31,7 @@
         </router-link>
       </h1>
       <div class="searchArea">
-        <form class="searchForm">
+        <form class="searchForm" @submit.prevent>
           <input
             type="text"
             id="autocomplete"
@@ -58,6 +58,12 @@ export default {
     return {
       keyword: ""
     }
+  },
+  mounted () {
+    // 监听 search 组件发出的 clear 事件，一旦触发就清空关键词
+    this.$bus.$on('clear', () => {
+      this.keyword = ''
+    })
   },
   methods: {
     goSearch () {

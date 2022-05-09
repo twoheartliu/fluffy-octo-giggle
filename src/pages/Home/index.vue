@@ -22,12 +22,10 @@ import { mapState } from "vuex"
 
 export default {
   mounted () {
-    this.$store.dispatch('getFloorList')
+    this.$store.dispatch('home/getFloorList')
   },
   computed: {
-    ...mapState({
-      floorList: (state) => state.home.floorList
-    })
+    ...mapState('home', ['floorList'])
   },
   components: {
     ListContainer,

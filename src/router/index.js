@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/pages/Home'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Search from '@/pages/Search'
+import routes from './routes'
 
 // 使用插件
 Vue.use(VueRouter)
@@ -40,36 +37,10 @@ VueRouter.prototype.replace = function (params, resolve, reject) {
 
 // 配置路由
 export default new VueRouter({
-  routes: [
-    {
-      path: '/',
-      component: Home,
-      meta: {
-        isFooterShow: true,
-      },
-    },
-    {
-      path: '/login',
-      component: Login,
-    },
-    {
-      path: '/register',
-      component: Register,
-    },
-    {
-      name: 'search',
-      path: '/search/:keyword?',
-      component: Search,
-      meta: {
-        isFooterShow: true,
-      },
-      props: ($route) => {
-        return { h: 'hello', k: $route.query.k, keyword: $route.params.keyword }
-      },
-    },
-    {
-      path: '*',
-      components: Home,
-    },
-  ],
+  routes,
+  // 滚动行为
+  scrollBehavior(to, from, savedPosition) {
+    // 路由跳转后自动滚动到顶部
+    return { y: 0 }
+  },
 })

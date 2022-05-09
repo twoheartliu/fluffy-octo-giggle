@@ -5,18 +5,20 @@ import mockRequests from './mockAjax'
 // /api/product/getBaseCategoryList get 参数无
 
 export const getCategoryList = () =>
-  requests({
-    url: '/product/getBaseCategoryList',
-  })
+  requests.get('/product/getBaseCategoryList')
 
 // mock banner 接口
-export const getBannerList = () =>
-  mockRequests({
-    url: '/banner',
-  })
+export const getBannerList = () => mockRequests.get('/banner')
 
 // mock floor 接口
-export const getFloorList = () =>
-  mockRequests({
-    url: '/floor',
+export const getFloorList = () => mockRequests.get('/floor')
+
+// 产品搜索列表
+// params 默认参数，应当是一个空对象，否则报错
+// 当参数是空对象时，返回所有 items
+export const postSearchList = (params) =>
+  requests({
+    url: '/list',
+    method: 'post',
+    data: params,
   })

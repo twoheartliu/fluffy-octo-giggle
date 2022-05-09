@@ -3,19 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="i in bannerList" :key="i.id">
-              <img :src="i.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :list="bannerList"></Carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -92,39 +80,14 @@
 
 <script>
 import { mapState } from "vuex"
-import Swiper from 'swiper'
 
 export default {
   mounted () {
-    this.$store.dispatch('getBannerList')
+    this.$store.dispatch('home/getBannerList')
   },
   computed: {
-    ...mapState({
-      bannerList: (state) => state.home.bannerList
-    })
+    ...mapState("home", ["bannerList"])
   },
-  watch: {
-    bannerList: {
-      immediate: true,
-      handler () {
-        this.$nextTick(() => {
-          new Swiper('.swiper-container', {
-            autoplay: true,
-            loop: true,
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            }
-          })
-        })
-      }
-    }
-  },
-
 }
 </script>
 
