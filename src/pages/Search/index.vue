@@ -229,12 +229,12 @@ export default {
       this.searchParams.pageNo = pageNo
       this.getData()
     },
-    goDetail (id) {
+    goDetail (skuId) {
       // 注意要传 params 参数必须给路由定义 name
       this.$router.push({
         name: 'detail',
         params: {
-          id
+          skuId
         }
       })
     }

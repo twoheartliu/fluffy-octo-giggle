@@ -3,6 +3,7 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 export default [
   {
@@ -31,9 +32,20 @@ export default [
   },
   {
     name: 'detail',
-    path: '/detail/:id',
+    path: '/detail/:skuId',
     component: Detail,
-    props: ($route) => ({ skuId: $route.params.id }),
+    meta: {
+      isFooterShow: true,
+    },
+    props: ($route) => ({ skuId: $route.params.skuId }),
+  },
+  {
+    name: 'addCartSuccess',
+    path: '/addCartSuccess',
+    component: AddCartSuccess,
+    meta: {
+      isFooterShow: true,
+    },
   },
   {
     path: '*',

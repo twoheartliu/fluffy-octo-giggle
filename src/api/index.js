@@ -22,3 +22,15 @@ export const postSearchList = (params) =>
     method: 'post',
     data: params,
   })
+
+export const getItemDetail = (skuId) =>
+  requests({
+    url: `/item/${skuId}`,
+    method: 'get',
+  })
+
+export const postAddToCart = (skuId, skuNum) =>
+  requests({
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
+    method: 'post',
+  })
