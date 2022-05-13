@@ -2,8 +2,6 @@ import requests from './ajax'
 import mockRequests from './mockAjax'
 
 // 三级联动的接口
-// /api/product/getBaseCategoryList get 参数无
-
 export const getCategoryList = () =>
   requests.get('/product/getBaseCategoryList')
 
@@ -23,14 +21,23 @@ export const postSearchList = (params) =>
     data: params,
   })
 
+// 商品详情
 export const getItemDetail = (skuId) =>
   requests({
     url: `/item/${skuId}`,
     method: 'get',
   })
 
+// 添加到购物车或对购物车商品数量进行修改
 export const postAddToCart = (skuId, skuNum) =>
   requests({
     url: `/cart/addToCart/${skuId}/${skuNum}`,
     method: 'post',
+  })
+
+// 购物车列表
+export const getCartList = () =>
+  requests({
+    url: `/cart/cartList`,
+    method: 'get',
   })

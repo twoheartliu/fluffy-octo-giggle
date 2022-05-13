@@ -4,6 +4,7 @@ import Register from '@/pages/Register'
 import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from '@/pages/ShopCart'
 
 export default [
   {
@@ -43,6 +44,14 @@ export default [
     name: 'addCartSuccess',
     path: '/addCartSuccess',
     component: AddCartSuccess,
+    meta: {
+      isFooterShow: true,
+    },
+  },
+  {
+    name: 'ShopCart',
+    path: '/shopCart',
+    component: ShopCart,
     meta: {
       isFooterShow: true,
     },

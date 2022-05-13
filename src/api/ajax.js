@@ -1,5 +1,6 @@
 import axios from 'axios'
 import nprogress from 'nprogress'
+import store from '@/store'
 import 'nprogress/nprogress.css'
 // nprogress： start 代表进度条开始， done 代表进度条结束
 // 我们在请求发起时调用 start，在响应接收时，调用 done
@@ -18,6 +19,9 @@ const requests = axios.create({
 // 请求拦截器：在发请求之前，做一些事情
 requests.interceptors.request.use((config) => {
   // config: 配置对象，对象里 headers 请求头很重要
+  if (store.state.detail.uuid_token) {
+    config.headers.userTempId = store.state.detail.uuid_token
+  }
   nprogress.start()
   return config
 })

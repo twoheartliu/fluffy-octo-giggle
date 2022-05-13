@@ -16,7 +16,7 @@
         </div>
         <div class="right-gocart">
           <router-link :to="`/detail/${skuInfo.id}`">查看商品详情</router-link>
-          <a>去购物车结算 > </a>
+          <router-link to="/shopCart">去购物车结算</router-link>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { getItemDetail, postAddToCart } from '@/api'
+import { getUUID } from '@/utils'
 
 export default {
   namespaced: true,
@@ -12,6 +13,8 @@ export default {
       valuesSkuJson: undefined,
       price: null,
     },
+    // 游客临时身份
+    uuid_token: getUUID(),
   },
   mutations: {
     ITEMDETAIL(state, itemDetail) {
