@@ -17,6 +17,7 @@
               type="checkbox"
               name="chk_list"
               :checked="item.isChecked === 1"
+              @change="checkedOnchange(item, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -46,7 +47,7 @@
             }}</span>
           </li>
           <li class="cart-list-con7">
-            <a class="sindelet">删除</a>
+            <a class="sindelet" @click="deleteCart(item)">删除</a>
             <br />
             <a>移到收藏</a>
           </li>
@@ -55,11 +56,17 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllChecked && cartInfoList.length > 0"
+          :disabled="cartInfoList.length === 0"
+          @change="allCheckedOnchange($event)"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteCheckedItem">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -109,7 +116,40 @@ export default {
         await this.$store.dispatch('detail/postAddToCart', { skuId: item.skuId, skuNum: disNum })
         await this.getData()
       } catch (error) { }
-    }, 500),
+    }, 1000),
+    async deleteCart (item) {
+      try {
+        await this.$store.dispatch('shopCart/deleteCart', item.skuId)
+        this.getData()
+      } catch (error) {
+        console.log('delete error')
+      }
+    },
+    async checkedOnchange (item, event) {
+      // event 传递的是改变后的值
+      const isChecked = event.target.checked ? '1' : '0'
+      try {
+        await this.$store.dispatch('shopCart/getCheckCart', { skuId: item.skuId, isChecked })
+        this.getData()
+      } catch (error) { }
+    },
+    async deleteCheckedItem () {
+      try {
+        await this.$store.dispatch('shopCart/deleteCheckedItem')
+        this.getData()
+      } catch (error) {
+        console.log('error', error)
+      }
+    },
+    async allCheckedOnchange (event) {
+      const isAllChecked = event.target.checked ? '1' : '0'
+      try {
+        await this.$store.dispatch('shopCart/allCheckedOnchange', isAllChecked)
+        this.getData()
+      } catch (error) {
+        console.log('checked all error')
+      }
+    }
   },
   computed: {
     ...mapGetters('shopCart', ['cartInfoList']),
@@ -259,6 +299,7 @@ export default {
 
           a {
             color: #666;
+            cursor: pointer;
           }
         }
       }
@@ -292,6 +333,7 @@ export default {
         float: left;
         padding: 0 10px;
         color: #666;
+        cursor: pointer;
       }
     }
 
