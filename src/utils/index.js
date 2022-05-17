@@ -6,7 +6,7 @@ const isEmpty = (obj) => {
     return false
   }
 }
-
+// 移除对象中空元素
 export const removeEmptyElement = (obj) => {
   Object.keys(obj).forEach((item) => {
     if (isEmpty(obj[item])) {
@@ -16,6 +16,7 @@ export const removeEmptyElement = (obj) => {
   return obj
 }
 
+// 获取游客 uuid
 export const getUUID = () => {
   let uuid_token = localStorage.getItem('uuid_token')
   if (!uuid_token) {
@@ -23,4 +24,16 @@ export const getUUID = () => {
     localStorage.setItem('uuid_token', uuid_token)
   }
   return uuid_token
+}
+
+export const setToken = (token) => {
+  localStorage.setItem('token', token)
+}
+
+export const getToken = () => {
+  return localStorage.getItem('token')
+}
+
+export const clearStorage = () => {
+  localStorage.clear()
 }

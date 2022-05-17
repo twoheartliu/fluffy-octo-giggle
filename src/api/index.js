@@ -55,3 +55,40 @@ export const getCheckCart = ({ skuId, isChecked }) =>
     url: `/cart/checkCart/${skuId}/${isChecked}`,
     method: 'get',
   })
+
+// 获取验证码
+export const getSendCode = (phone) =>
+  requests({
+    url: `/user/passport/sendCode/${phone}`,
+    method: 'get',
+  })
+
+// 注册
+export const postRegister = (params) =>
+  requests({
+    url: `/user/passport/register`,
+    method: 'post',
+    data: params,
+  })
+
+// 登录
+export const postLogin = (params) =>
+  requests({
+    url: `/user/passport/login`,
+    method: 'post',
+    data: params,
+  })
+
+// 用户信息
+export const getUserInfo = () =>
+  requests({
+    url: `/user/passport/auth/getUserInfo`,
+    method: 'get',
+  })
+
+// 退出登录
+export const getLogout = () =>
+  requests({
+    url: `/user/passport/logout`,
+    method: 'get',
+  })

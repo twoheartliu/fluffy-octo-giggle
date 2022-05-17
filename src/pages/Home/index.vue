@@ -23,9 +23,10 @@ import { mapState } from "vuex"
 export default {
   mounted () {
     this.$store.dispatch('home/getFloorList')
+    this.$store.dispatch('user/getUserInfo')
   },
   computed: {
-    ...mapState('home', ['floorList'])
+    ...mapState('home', ['floorList']),
   },
   components: {
     ListContainer,

@@ -5,7 +5,12 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="name" class="user">
+            <span>{{ name }}</span>
+            |
+            <span @click="handleLogout">退出</span>
+          </p>
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
@@ -65,11 +70,13 @@ export default {
       this.keyword = ''
     })
   },
+  computed: {
+    name () {
+      return this.$store.state.user.userInfo.name
+    }
+  },
   methods: {
     goSearch () {
-      // 路由传参 
-      // 1. params 2.query 参数
-      // 方式 1. 字符串拼接 2. 模版字符串 3. obj
       const location = {
         name: 'search',
         params: {
@@ -83,6 +90,12 @@ export default {
       }
 
       this.$router.push(location)
+    },
+    async handleLogout () {
+      try {
+        await this.$store.dispatch('user/getLogout')
+        this.$router.push('/')
+      } catch (error) { }
     }
   }
 }
@@ -102,6 +115,10 @@ export default {
 
       .loginList {
         float: left;
+
+        .user {
+          cursor: pointer;
+        }
 
         p {
           float: left;

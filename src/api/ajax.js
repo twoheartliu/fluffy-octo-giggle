@@ -19,9 +19,9 @@ const requests = axios.create({
 // 请求拦截器：在发请求之前，做一些事情
 requests.interceptors.request.use((config) => {
   // config: 配置对象，对象里 headers 请求头很重要
-  if (store.state.detail.uuid_token) {
-    config.headers.userTempId = store.state.detail.uuid_token
-  }
+  store.state.detail.uuid_token &&
+    (config.headers.userTempId = store.state.detail.uuid_token)
+  store.state.user.token && (config.headers.token = store.state.user.token)
   nprogress.start()
   return config
 })
