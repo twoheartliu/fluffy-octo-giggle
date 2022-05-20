@@ -5,7 +5,15 @@ export default {
   namespaced: true,
   state: {
     itemDetail: {
-      categoryView: {},
+      categoryView: {
+        category1Id: null,
+        category1Name: '',
+        category2Id: null,
+        category2Name: '',
+        category3Id: null,
+        category3Name: '',
+        id: null,
+      },
       skuInfo: {
         skuImageList: [{ imgUrl: '' }],
       },

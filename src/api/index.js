@@ -5,6 +5,9 @@ import mockRequests from './mockAjax'
 export const getCategoryList = () =>
   requests.get('/product/getBaseCategoryList')
 
+// mock 三级联动的接口
+export const getMockCategoryList = () => mockRequests.get('/category')
+
 // mock banner 接口
 export const getBannerList = () => mockRequests.get('/banner')
 
@@ -90,5 +93,19 @@ export const getUserInfo = () =>
 export const getLogout = () =>
   requests({
     url: `/user/passport/logout`,
+    method: 'get',
+  })
+
+// 用户地址
+export const getAddress = () =>
+  requests({
+    url: `/user/userAddress/auth/findUserAddressList`,
+    method: 'get',
+  })
+
+// 交易页信息
+export const getTradeInfo = () =>
+  requests({
+    url: `/order/auth/trade`,
     method: 'get',
   })

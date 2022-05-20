@@ -1,4 +1,9 @@
-import { getBannerList, getCategoryList, getFloorList } from '@/api'
+import {
+  getBannerList,
+  getCategoryList,
+  getFloorList,
+  getMockCategoryList,
+} from '@/api'
 
 export default {
   namespaced: true,
@@ -21,7 +26,7 @@ export default {
   },
   actions: {
     async categoryList({ commit }) {
-      const res = await getCategoryList()
+      const res = await getMockCategoryList()
       if (res.code === 200) {
         commit('CATEGORYLIST', res.data)
       }

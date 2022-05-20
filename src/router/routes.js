@@ -5,6 +5,7 @@ import Search from '@/pages/Search'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
 
 export default [
   {
@@ -15,6 +16,7 @@ export default [
     },
   },
   {
+    name: 'login',
     path: '/login',
     component: Login,
   },
@@ -57,7 +59,15 @@ export default [
     },
   },
   {
+    name: 'Trade',
+    path: '/Trade',
+    component: Trade,
+    meta: {
+      isFooterShow: true,
+    },
+  },
+  {
     path: '*',
-    components: Home,
+    redirect: '/',
   },
 ]

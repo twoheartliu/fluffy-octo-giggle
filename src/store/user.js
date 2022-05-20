@@ -1,5 +1,5 @@
 import { getLogout, getUserInfo, postLogin } from '@/api'
-import { clearStorage, getToken, setToken } from '@/utils'
+import { removeToken, getToken, setToken } from '@/utils'
 
 export default {
   namespaced: true,
@@ -17,7 +17,7 @@ export default {
     LOGOUT(state) {
       state.token = ''
       state.userInfo = {}
-      clearStorage()
+      removeToken()
     },
   },
   actions: {
@@ -35,6 +35,9 @@ export default {
       const res = await getUserInfo()
       if (res.code === 200) {
         commit('USERINFO', res.data)
+        return 'ok'
+      } else {
+        return Promise.reject(new Error('fail'))
       }
     },
     async getLogout({ commit }) {
