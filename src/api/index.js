@@ -96,7 +96,7 @@ export const getLogout = () =>
     method: 'get',
   })
 
-// 用户地址
+// 订单收件人地址
 export const getAddress = () =>
   requests({
     url: `/user/userAddress/auth/findUserAddressList`,

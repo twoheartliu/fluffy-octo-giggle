@@ -2,21 +2,35 @@ import { getAddress, getTradeInfo } from '@/api'
 
 export default {
   namespaced: true,
-  state: {},
-  mutations: {},
+  state: {
+    addressList: [],
+    tradeInfo: {},
+  },
+  mutations: {
+    ADDRESSLIST(state, addressList) {
+      state.addressList = addressList
+    },
+    TRADEINFO(state, tradeInfo) {
+      state.tradeInfo = tradeInfo
+    },
+  },
   actions: {
     async getAddress({ commit }) {
       const res = await getAddress()
       if (res.code === 200) {
-        console.log('res', res)
+        commit('ADDRESSLIST', res.data)
       }
     },
     async getTradeInfo({ commit }) {
       const res = await getTradeInfo()
       if (res.code === 200) {
-        console.log('res', res)
+        commit('TRADEINFO', res.data)
       }
     },
   },
-  getters: {},
+  getters: {
+    detailArrayList(state) {
+      return state.tradeInfo.detailArrayList || []
+    },
+  },
 }
