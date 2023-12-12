@@ -29,7 +29,7 @@ requests.interceptors.response.use(
     nprogress.done()
     return res.data
   },
-  (err) => {
+  () => {
     // 失败的回调函数
     return Promise.reject(new Error('failed'))
   }

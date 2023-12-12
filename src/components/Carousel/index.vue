@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container" id="floor1Swiper">
+  <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="i in list" :key="i.id">
         <img :src="i.imgUrl" />
@@ -15,6 +15,7 @@
 
 <script>
 import Swiper from "swiper"
+import 'swiper/css/swiper.min.css'
 
 export default {
   name: 'Carousel',
@@ -43,5 +44,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

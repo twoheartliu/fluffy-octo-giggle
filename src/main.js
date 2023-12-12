@@ -6,7 +6,6 @@ import TyepNav from '@/components/TypeNav'
 import Carousel from '@/components/Carousel'
 import Pagination from '@/components/Pagination'
 import '@/mock/mockServer'
-import 'swiper/css/swiper.css'
 
 Vue.config.productionTip = false
 Vue.component(TyepNav.name, TyepNav)
